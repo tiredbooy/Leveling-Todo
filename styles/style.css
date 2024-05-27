@@ -1,0 +1,466 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root{
+    --dark-bg-color: #131313;
+    --light-bg-color: #fff;
+
+    --dark-header-color: #4b4b4c;
+    --light-header-color: #2e2e2e;
+
+    --light-text-color: #fff;
+    --dark-text-color: #222;
+
+    --font-size : 1em;
+    --font-bold : 600;
+    --font-bolder : 800;
+    --font-reqular : 400;
+    --font-eng : "Poppins", sans-serif;
+    --font-per : "Markazi Text", serif;
+    
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    overflow-x: hidden;
+    transition: all 0.3s;
+}
+
+
+body.light-theme{
+    background-color: var(--light-bg-color);
+    color: var(--dark-text-color);
+    font-size: var(--font-size);
+    
+}
+
+/* body.eng{
+    font-family: var(--font-eng);
+} */
+
+/* body.per{ */
+    /* font-family: var(--font-per); */
+    /* font-size: 1.8em; */
+/* } */
+
+body.dark-theme{
+    font-family: var(--font-reqular);
+    background-color: var(--dark-bg-color);
+    font-size: var(--font-size);
+    /* font-family: var(--font-eng); */
+}
+
+/* Header */
+
+header{
+    width: 100%;
+}
+
+body.light-theme header .nav-bar{
+    background: var(--light-header-color);
+    box-shadow: 0 0 8px ;
+}
+
+body.dark-theme header .nav-bar{
+    background: var(--dark-header-color);
+    box-shadow: 0 0 8px .2px #4b4b4c;
+}
+
+header .nav-bar .nav-item{
+    padding: 15px;
+    margin: 0 5px 0 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .nav-bar .nav-item .left .level-tier{
+    font-size: 1.3em;
+    font-weight: var(--font-bold);
+    color: var(--light-text-color);
+}
+
+header .nav-bar .nav-item .middle h3{
+    font-size:1.6em ;
+    font-weight: var(--font-bolder);
+    color: var(--light-text-color);
+}
+
+header .nav-bar .nav-item .right{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header .nav-bar .nav-item .right .profile{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: black;
+    margin-left: 13px;
+    cursor: pointer;
+}
+
+header .nav-bar .nav-item .right button{
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    margin-right: 1em;
+}
+
+header .nav-bar .nav-item .right button img{
+    width: 35px;
+    height: 35px;
+}
+
+/* End of Header */
+
+
+
+
+
+.task-cards{
+    
+    margin:90px 50px;
+}
+
+body.dark-theme .task-cards .task-card{
+    margin: 20px;
+    max-width: 700px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.658);
+    color: white;
+    padding: 7px;
+}
+
+body.light-theme .task-cards .task-card{
+   margin: 20px;
+   max-width: 700px;
+   border-radius: 10px;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   align-items: center;
+   border: 1px solid black;
+   padding: 7px;
+}
+
+body.dark-theme .task-cards .task-card .card-header{
+    border-bottom: 1px solid #666;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2em;
+    font-weight: var(--font-bold);
+}
+
+body.light-theme .task-cards .task-card .card-header{
+    border-bottom: 1px solid #666;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.2em;
+    font-weight: var(--font-bold);
+    background: transparent;
+}
+
+body.eng .task-cards .task-card .card-header{
+    direction: ltr;
+}
+
+body.per .task-cards .task-card .card-header{
+    direction: rtl;
+}
+
+/* card Body */
+
+.task-cards .task-card .card-body{
+    padding: 1em;
+    border-bottom: 1px solid #666;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+/*  */
+
+.task-cards .task-card .card-body .task{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid #333;
+    padding: 7px;
+}
+
+body.eng .task-cards .task-card .card-body .task{
+    direction: ltr;
+}
+
+body.per .task-cards .task-card .card-body .task{
+    direction: rtl;
+}
+
+.task-cards .task-card .card-body .task li{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* margin-right: 69%; */
+}
+
+.task-cards .task-card .card-body .task i {
+    display: none;
+}
+
+.task-cards .task-card .card-body .task li:hover i {
+    display: inline-block;
+}
+
+.task-cards .task-card .card-body .task  #check-box{
+    accent-color: purple;
+    width: 1em;
+}
+
+
+/* End Of Card Body */
+
+.task-cards .task-card .card-bottom{
+    width: 100%;
+    padding: .4em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+body.dark-theme .task-cards .task-card .card-bottom input {
+    border: none;
+    border-bottom: 1px solid #999;
+    outline: none;
+    background: transparent;
+    padding: 5px;
+    margin-right: 10px;
+    color: white;
+    transition: all 0.3s;
+}
+
+body.light-theme .task-cards .task-card .card-bottom input{
+    border: none;
+    border-bottom: 1px solid #999;
+    outline: none;
+    background: transparent;
+    padding: 5px;
+    margin-right: 10px;
+    color: var(--dark-text-color);
+    transition: all 0.3s;
+}
+
+
+body.eng .task-cards .task-card .card-bottom input{
+    direction: ltr;
+}
+
+body.per .task-cards .task-card .card-bottom input{
+    direction: rtl;
+}
+
+body.dark-theme .task-cards .task-card .card-bottom input::placeholder{
+    color: #b6b6b6;
+}
+
+body.light-theme .task-cards .task-card .card-bottom input::placeholder{
+    color: #b6b6b6;
+}
+
+body.dark-theme .task-cards .task-card .card-bottom input:focus{
+    padding: 7px;
+    border-radius:3px ;
+    border-radius: 7px;
+    box-shadow: 0 0 4px ;
+}
+
+body.light-theme .task-cards .task-card .card-bottom input:focus{
+    padding: 7px;
+    border-radius:3px ;
+    border-radius: 7px;
+    box-shadow: 0 0 4px ;
+}
+
+body.dark-theme .task-cards .task-card .card-bottom button {
+    border: none;
+    outline: none;
+    background: none;
+    color: rgb(199, 199, 199);
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+body.light-theme .task-cards .task-card .card-bottom button{
+    border: none;
+    outline: none;
+    background: none;
+    color: #8a8a8a;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+body.dark-theme .task-cards .task-card .card-bottom button:hover{
+    color: white;
+    font-weight: var(--font-bolder);
+}
+
+body.light-theme .task-cards .task-card .card-bottom button:hover{
+    color: var(--dark-text-color);
+    font-weight: var(--font-bolder);
+}
+
+/* menu wrapper */
+
+body.dark-theme .wrapper {
+    background: var(--light-bg-color);
+    padding: 8px;
+    width: 15em;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: none;
+}
+
+body.light-theme .wrapper{
+    background: var(--dark-bg-color);
+    padding: 8px;
+    width: 15em;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    display: none;
+}
+
+body.per .wrapper {
+    direction: rtl;
+    
+}
+
+body.dark-theme .wrapper.active{
+    display: block;
+}
+
+body.light-theme .wrapper.active{
+    display: block;
+}
+
+.wrapper ul{
+    width: 100%;
+}
+
+.wrapper ul li:hover{
+    font-weight: 600;
+}
+
+body.dark-theme .wrapper ul li{
+    list-style: none;
+    border-bottom: 1px solid #999999bd;
+    padding: 10px;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+body.light-theme .wrapper ul li{
+    list-style: none;
+    border-bottom: 1px solid #313131bd;
+    padding: 10px;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+body.dark-theme .wrapper ul :hover{
+    background: #bebebe;
+    width: 100%;
+}
+
+body.light-theme .wrapper ul :hover{
+    background: #666666;
+    width: 100%;
+}
+
+body.dark-theme .wrapper ul li a{
+    text-decoration: none;
+    color: var(--dark-text-color);
+}
+
+body.light-theme .wrapper ul li a{
+    text-decoration: none;
+    color: var(--light-text-color);
+}
+
+
+body.dark-theme .wrapper .language{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    margin-left: 14%;
+    border-bottom: 1px solid #999999bd;
+    padding: 10px;
+    color: var(--dark-text-color);
+    
+}
+
+body.light-theme .wrapper .language{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    margin-left: 16%;
+    border-bottom: 1px solid #313131bd;
+    padding: 10px;
+    color: var(--light-text-color);
+
+}
+
+.wrapper .language .language-btn{
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.wrapper .language .language-btn i{
+    font-size: .6em;
+    margin-right: 4px;
+}
+
+.wrapper .language .languages{
+    display: none;
+    
+}
+
+.wrapper .language .languages.active{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.wrapper .language .languages span:hover{
+    font-weight: 600;
+}
+
+/* end of menu wrapper */
+
+
+
+
+
