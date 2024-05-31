@@ -69,7 +69,8 @@ function createNewTask(taskText, index,isComplete = false) {
 
     container.append(taskItem);
 
-    // let isComplete = false;
+
+
     // Set the checkbox and task completion status
     taskCheckbox.checked = isComplete;
     if (isComplete) {
@@ -79,7 +80,6 @@ function createNewTask(taskText, index,isComplete = false) {
     taskCheckbox.addEventListener("change", () => {
       isComplete = taskCheckbox.checked;
       updateTaskStatus(taskText, isComplete, index);
-      // handleUserLevel(isComplete);
     });
 
     let id = Math.floor(Math.random() * 100);
@@ -317,30 +317,28 @@ let playerRank = 'No Rank';
 
 function handelUserLevel(isComplete) {
   if (isComplete) {
-    playerXp = playerXp + 1000;
-    if (playerXp >= 1000000) {
-      playerLevel = 1000;
-      playerRank = 'S';
+    playerXp += 1000;
+    playerLevel = Math.floor(playerXp / 1000);
+
+    if (playerLevel >= 1000) {
+      playerRank = 'S Rank';
     }
-    else if (playerXp >= 700000) {
-      playerLevel = 700;
-      playerRank = 'S';
+    else if (playerLevel >= 700) {
+      playerRank = 'A Rank';
     }
-    else if (playerXp >= 400000) {
-      playerLevel = 400;
-      playerRank = 'A';
+    else if (playerLevel >= 400) {
+      playerRank = 'B Rank';
     }
-    else if (playerXp >= 150000) {
-      playerLevel = 150;
-      playerRank = 'B';
+    else if (playerLevel >= 150) {
+      playerRank = 'C Rank';
     }
-    else if (playerXp >= 50000) {
-      playerLevel = 50;
-      playerRank = 'C';
+    else if (playerLevel >= 50) {
+      playerRank = 'D Rank';
     }
-    else if (playerXp >= 10000) {
-      playerLevel = 10;
-      playerRank = 'E';
+    else if (playerLevel >= 10) {
+      playerRank = 'E Rank';
+    }else if(playerLevel >= 1){
+      playerRank = 'No Rank';
     }
 
     let levelStat = {
@@ -351,6 +349,27 @@ function handelUserLevel(isComplete) {
     localStorage.setItem('levelStat', JSON.stringify(levelStat));
   }
 
-  let getPlayerLevelStat = JSON.parse(localStorage.getItem('levelStat'));
+  
 
 }
+
+function loadUserLevel() {
+  let getPlayerLevelStat = JSON.parse(localStorage.getItem('levelStat'));
+
+
+  if(getPlayerLevelStat){
+    playerXp = getPlayerLevelStat.playerXp;
+    playerLevel = getPlayerLevelStat.playerLevel;
+    playerRank = getPlayerLevelStat.playerRank;
+  }
+
+  let navRank = $.querySelector('.level-tier');
+  let wrapperLevel = $.querySelector('.currentLevel');
+
+  navRank.innerHTML = playerRank;
+  wrapperLevel.innerHTML = `Level ${playerLevel}`;
+
+
+}
+
+loadUserLevel()
