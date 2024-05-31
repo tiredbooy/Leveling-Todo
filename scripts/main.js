@@ -1,3 +1,5 @@
+"use strict";
+
 const $ = document;
 const inputBoxes = $.querySelectorAll(".task-input");
 const addTaskBtns = $.querySelectorAll(".add-task");
@@ -23,65 +25,95 @@ addTaskBtns.forEach((btn, index) => {
   });
 });
 
+// End of use button to create Task
+
 // use Enter to create Task
 inputBoxes.forEach((inputBox, index) => {
   inputBox.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-      createNewTask(inputBox.value.trim(""), index);
+      createNewTask(inputBox.value.trim(), index);
       inputBox.value = "";
     }
   });
 });
-
+// end of use Enter to create Task
 
 // create Task section
 
 let taskArray = [];
 
-function createNewTask(taskText, index) {
-  let container = $.querySelectorAll(".card-body")[index];
+function createNewTask(taskText, index,isComplete = false) {
+  if (taskText.trim() !== "") {
+    let container = document.querySelectorAll(".card-body")[index];
 
-  let newTask = $.createElement("li");
-  newTask.innerHTML = taskText;
+    let taskCheckbox = document.createElement("input");
+    taskCheckbox.setAttribute("type", "checkbox");
+    taskCheckbox.id = "check-box";
+    taskCheckbox.classList.add('dynamic-checkbox');
 
-  let taskCheckbox = $.createElement("input");
-  taskCheckbox.setAttribute("type", "checkbox");
-  taskCheckbox.id = "check-box";
+    let newTask = document.createElement("li");
+    newTask.innerHTML = taskText;
 
-  let removeIcon = $.createElement('i');
-  // removeIcon.style.display = 'none'
-  removeIcon.className = 'fa-solid fa-xmark';
+    let removeIcon = document.createElement('i');
+    removeIcon.className = 'fa-solid fa-xmark';
+    removeIcon.addEventListener('click', () => {
+      container.removeChild(taskItem);
+      let id = taskObj.id;
+      taskArray = taskArray.filter(task => task.id !== id);
+      localStorage.setItem('taskArray', JSON.stringify(taskArray));
+    });
 
-  let taskItem = $.createElement("div");
-  taskItem.classList.add("task");
-  taskItem.append(removeIcon,newTask, taskCheckbox);
+    let taskItem = document.createElement("div");
+    taskItem.classList.add("task");
+    taskItem.append(removeIcon, newTask, taskCheckbox);
 
-  container.append(taskItem);
+    container.append(taskItem);
 
-  let isComplete = false;
+    // let isComplete = false;
+    // Set the checkbox and task completion status
+    taskCheckbox.checked = isComplete;
+    if (isComplete) {
+      taskItem.classList.add('completed');
+    }
 
-  taskCheckbox.addEventListener("change", () => {
-    isComplete = taskCheckbox.checked;
-    updateTaskStatus(taskText, isComplete, index);
-    handelUserLevel(isComplete)
-  });
+    taskCheckbox.addEventListener("change", () => {
+      isComplete = taskCheckbox.checked;
+      updateTaskStatus(taskText, isComplete, index);
+      // handleUserLevel(isComplete);
+    });
 
-  let taskObj = {
-    taskText: taskText,
-    isComplete: isComplete,
-    index: index, 
-  };
+    let id = Math.floor(Math.random() * 100);
 
-  taskArray.push(taskObj);
+    let taskObj = {
+      id: id,
+      taskText: taskText.trim(),
+      isComplete: isComplete,
+      index: index,
+    };
 
-  localStorage.setItem("taskArray", JSON.stringify(taskArray));
+    taskArray.push(taskObj);
+
+    localStorage.setItem("taskArray", JSON.stringify(taskArray));
+  }
 }
 
 
-function updateTaskStatus(taskText, isComplete) {
+function updateTaskStatus(taskText, isComplete,index) {
   taskArray.forEach((task) => {
     if (task.taskText.toLowerCase() === taskText.toLowerCase()) {
       task.isComplete = isComplete;
+      handelUserLevel(isComplete)
+      const container = $.querySelectorAll(".card-body")[task.index];
+      const taskItem = Array.from(container.querySelectorAll('.task')).find(
+        item => item.querySelector('li').innerHTML === taskText
+      );
+      if(taskItem){
+        if(isComplete){
+          taskItem.classList.add('completed')
+        }else{
+          taskItem.classList.remove('completed')
+        }
+      }
     }
   });
   localStorage.setItem("taskArray", JSON.stringify(taskArray));
@@ -94,98 +126,26 @@ function loadTasks() {
   if (loadedTask) {
     const loadedTaskArray = JSON.parse(loadedTask);
     loadedTaskArray.forEach((task) => {
-      const container = $.querySelectorAll(".card-body")[task.index];
-      createNewTask(task.taskText, task.index);
-
-      if (task.isComplete) {
-        $.querySelector(
-          '.task:last-child input[type="checkbox"]'
-        ).checked = true;
-      }
+      createNewTask(task.taskText,task.index,task.isComplete)
     });
+    taskArray = loadedTaskArray;
   }
 }
 
 loadTasks();
+//end of load task from localStorage
 
 
-// HANDEL THE USER LEVEL AND RANK
-
-// E  D  C  B  A  S
-
-let playerXp = 0;
-let playerLevel = 1;
-let playerRank = 'No Rank';
-
-function handelUserLevel(isComplete){
-  if(isComplete){
-    playerXp = playerXp + 1000;
-    if(playerXp >= 10000){
-      playerLevel += 10;
-      // playerRank = 'E';
-    }
-    else if(playerXp >= 50000){
-      playerLevel += 50;
-      // playerRank = 'C';
-    }
-    else if(playerXp >= 150000){
-      playerLevel += 150;
-      // playerRank = 'B';
-    }
-    else if(playerXp >= 400000){
-      playerLevel += 400;
-      // playerRank = 'A';
-    }
-    else if(playerXp >= 700000){
-      playerLevel += 700;
-      // playerRank = 'S';
-      
-    }
-    else if(playerXp >= 1000000){
-      playerLevel += 1000;
-      // playerRank = 'S';
-      
-    }
-  }
-  console.log(playerXp);
-
-  if(playerLevel >= 10){
-    // playerLevel = 10;
-    playerRank = 'E';
-    console.log(playerRank);
-  }else if(playerLevel >= 50){
-    // playerLevel = 50;
-    playerRank = 'D';
-    console.log(playerRank);
-  }else if(playerLevel >= 150){
-    // playerLevel = 150;
-    playerRank = 'C';
-    console.log(playerRank);
-  }else if(playerLevel >= 400) {
-    // playerLevel = 400;
-    playerRank = 'B';
-    console.log(playerRank);
-  }else if(playerLevel >= 700){
-    // playerLevel = 700;
-    playerRank = 'A';
-    console.log(playerRank);
-  }else if(playerLevel >= 1000){
-    // playerLevel = 1000;
-    playerRank = 'S';
-    console.log(playerRank);
-  }
-
- 
-}
 
 
 //  wrapper menu dev
 profilePicture.addEventListener('click',() => {
-  menuWrapper.classList.toggle('active')
+    menuWrapper.classList.toggle('active')
 })
+// end of wrapper menu dev
+
 
 // them Switch
-
 function switchTheme() {
   themeSwitcher.addEventListener('click',() => {
 
@@ -193,20 +153,37 @@ function switchTheme() {
         currentThemeImage.setAttribute("src", "./assets/icon-sun.svg");
         bodyTag.classList.remove('light-theme');
         bodyTag.classList.add('dark-theme');
+        localStorage.setItem('chakraUi', 'Dark');
       }else{
         currentThemeImage.setAttribute("src", "./assets/icon-moon.svg");
         bodyTag.classList.remove('dark-theme');
         bodyTag.classList.add('light-theme');
+        localStorage.setItem('chakraUi', 'Light');
       }
-    
   })
 }
+
 switchTheme();
+// end of them Switch
+
+
+// load theme
+function loadTheme(){
+  let currentThemeUi = localStorage.getItem('chakraUi');
+  if(currentThemeUi == 'Dark'){
+    bodyTag.classList.remove('light-theme');
+    bodyTag.classList.add('dark-theme');
+  }else{
+    bodyTag.classList.remove('dark-theme');
+    bodyTag.classList.add('light-theme');
+  }
+}
+
+loadTheme();
+//end of load theme
 
 
 // handel Language
-
-
 function language(){ 
   // adding click event on profile-icon in header
   languageBtn.addEventListener('click',() => {
@@ -237,7 +214,6 @@ function language(){
 language()
 
 
-
 function loadLanguage(){
   const loadedLanguage = localStorage.getItem('language');
 
@@ -253,6 +229,7 @@ function loadLanguage(){
 }
 
 loadLanguage()
+
 
 
 function updateLang(currentLang) {
@@ -326,5 +303,54 @@ function updateLang(currentLang) {
 
   }
 }
+//end of handel Language
 
-// handel Language
+
+
+// HANDEL THE USER LEVEL AND RANK
+
+// E  D  C  B  A  S
+
+let playerXp = 0;
+let playerLevel = 1;
+let playerRank = 'No Rank';
+
+function handelUserLevel(isComplete) {
+  if (isComplete) {
+    playerXp = playerXp + 1000;
+    if (playerXp >= 1000000) {
+      playerLevel = 1000;
+      playerRank = 'S';
+    }
+    else if (playerXp >= 700000) {
+      playerLevel = 700;
+      playerRank = 'S';
+    }
+    else if (playerXp >= 400000) {
+      playerLevel = 400;
+      playerRank = 'A';
+    }
+    else if (playerXp >= 150000) {
+      playerLevel = 150;
+      playerRank = 'B';
+    }
+    else if (playerXp >= 50000) {
+      playerLevel = 50;
+      playerRank = 'C';
+    }
+    else if (playerXp >= 10000) {
+      playerLevel = 10;
+      playerRank = 'E';
+    }
+
+    let levelStat = {
+      playerXp: playerXp,
+      playerLevel: playerLevel,
+      playerRank: playerRank
+    }
+    localStorage.setItem('levelStat', JSON.stringify(levelStat));
+  }
+
+  let getPlayerLevelStat = JSON.parse(localStorage.getItem('levelStat'));
+
+}

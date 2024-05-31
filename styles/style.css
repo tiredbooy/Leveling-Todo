@@ -30,7 +30,21 @@
 body{
     overflow-x: hidden;
     transition: all 0.3s;
+    scroll-behavior: smooth;
 }
+
+body::-webkit-scrollbar {
+    width: 1em;
+  }
+   
+  body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+   
+  body::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+  }
 
 
 body.light-theme{
@@ -39,15 +53,6 @@ body.light-theme{
     font-size: var(--font-size);
     
 }
-
-/* body.eng{
-    font-family: var(--font-eng);
-} */
-
-/* body.per{ */
-    /* font-family: var(--font-per); */
-    /* font-size: 1.8em; */
-/* } */
 
 body.dark-theme{
     font-family: var(--font-reqular);
@@ -105,6 +110,7 @@ header .nav-bar .nav-item .right .profile{
     background: black;
     margin-left: 13px;
     cursor: pointer;
+    transition: all 0.3s;
 }
 
 header .nav-bar .nav-item .right button{
@@ -146,6 +152,7 @@ body.dark-theme .task-cards .task-card{
 
 body.light-theme .task-cards .task-card{
    margin: 20px;
+   min-width: 270px;
    max-width: 700px;
    border-radius: 10px;
    display: flex;
@@ -202,9 +209,15 @@ body.per .task-cards .task-card .card-header{
     display: flex;
     align-items: center;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content:space-between;
     border-bottom: 1px solid #333;
     padding: 7px;
+    transition: all 0.2s;
+}
+
+.task-cards .task-card .card-body .task.completed {
+    text-decoration: line-through;
+    color: #888; 
 }
 
 body.eng .task-cards .task-card .card-body .task{
@@ -217,24 +230,104 @@ body.per .task-cards .task-card .card-body .task{
 
 .task-cards .task-card .card-body .task li{
     list-style: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* margin-right: 69%; */
+    margin-right:-50%;
+    transition: all 0.2s;
+}
+
+body.eng .task-cards .task-card .card-body .task li{
+    margin-right: 45%;
+}
+
+.task-cards .task-card .card-body .task:hover i{
+    visibility: visible;
 }
 
 .task-cards .task-card .card-body .task i {
-    display: none;
+    visibility: hidden;
+    font-size: 1em;
+    margin-right: 10px;
+    margin-left: 20px;
+    color: #666;
+    cursor: pointer;
 }
 
-.task-cards .task-card .card-body .task li:hover i {
-    display: inline-block;
+body.eng .task-cards .task-card .card-body .task i{
+    margin:0;
 }
 
-.task-cards .task-card .card-body .task  #check-box{
+.task-cards .task-card .card-body .task i:hover{
+    color: white;
+}
+
+body.light-theme .task-cards .task-card .card-body .task i:hover{
+    color: black;
+}
+
+body.dark-theme .task-cards .task-card .card-body .task i:hover{
+    color: white;
+}
+
+body.light-theme .task-cards .task-card .card-body .task  #check-box{
+    -webkit-appearance: none;
     accent-color: purple;
+    border-radius: 50%;
     width: 1em;
+    height: 1em;
+    border: 1px solid black;
+    /* margin-right: 90px; */
 }
+
+body.dark-theme .task-cards .task-card .card-body .task  #check-box{
+    -webkit-appearance: none;
+    accent-color: purple;
+    border-radius: 50%;
+    width: 1.2em;
+    height: 1.2em;
+    border: 1px solid white;
+}
+
+body.light-theme .task-cards .task-card .card-body .task  #check-box:checked{
+    background-color: var(--light-bg-color);
+}
+
+.dynamic-checkbox {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    margin-right: 10px;
+    /* background: linear-gradient(135deg, #8B008B, #C71585) no-repeat; */
+    background-size: 100% 100%;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .dynamic-checkbox:checked{
+    background: linear-gradient(45deg, #8F00FF, #FF69B4)
+  }
+
+  .dynamic-checkbox:checked::before {
+    content: '\2713';
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    font-size: .8em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+   
+  }
+
+ body.light-theme .dynamic-checkbox:checked::before{
+    content: '\2713';
+    color: white;
+    font-weight: bold;
+    position: absolute;
+    font-size: .8em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
 
 /* End Of Card Body */
@@ -291,14 +384,15 @@ body.dark-theme .task-cards .task-card .card-bottom input:focus{
     padding: 7px;
     border-radius:3px ;
     border-radius: 7px;
-    box-shadow: 0 0 4px ;
+    box-shadow: -2px 4px 5px rgba(114, 114, 114, 0.555);
+    border: none;
 }
 
 body.light-theme .task-cards .task-card .card-bottom input:focus{
     padding: 7px;
     border-radius:3px ;
     border-radius: 7px;
-    box-shadow: 0 0 4px ;
+    box-shadow: -2px 4px 5px rgba(0, 0, 0, 0.466);
 }
 
 body.dark-theme .task-cards .task-card .card-bottom button {
@@ -331,10 +425,16 @@ body.light-theme .task-cards .task-card .card-bottom button:hover{
 
 /* menu wrapper */
 
+.wrapper{
+    margin-left: 80%; 
+    margin-right: 10px; 
+    /* width: 100%; */
+}
+
 body.dark-theme .wrapper {
     background: var(--light-bg-color);
     padding: 8px;
-    width: 15em;
+    min-width: 15em;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     display: none;
@@ -342,8 +442,10 @@ body.dark-theme .wrapper {
 
 body.light-theme .wrapper{
     background: var(--dark-bg-color);
+    /* width: 100%; */
     padding: 8px;
-    width: 15em;
+    min-width: 15em;
+    /* width: 15em; */
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     display: none;
@@ -351,7 +453,7 @@ body.light-theme .wrapper{
 
 body.per .wrapper {
     direction: rtl;
-    
+    margin-left: 75%;
 }
 
 body.dark-theme .wrapper.active{
@@ -461,6 +563,29 @@ body.light-theme .wrapper .language{
 /* end of menu wrapper */
 
 
+@media screen  and (max-width : 1200px){
+    .wrapper{
+        position: relative;
+        right: 75%;
+        width: 100%;
+    }
+    
+}
 
 
+@media screen  and (max-width : 576px){
+    .wrapper{
+        position: relative;
+        right: 75%;
 
+        width: 100%;
+    }
+
+    body.eng .wrapper{
+        position: relative;
+        right: 80%;
+
+        width: 100%;
+    }
+    
+}
