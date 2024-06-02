@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./profile.css"/>
+    <title>Profile</title>
+</head>
+<body class="dark per">
+    <div class="container">
+        <div class="container-item">
+            <div class="prifle-edit">
+                <div class="profile-pic">
+                    <label for="file-upload" class="custom-file-upload">
+                        Upload Image
+                    </label>
+                    <input id="file-upload" type="file" />
+                    <img src="/assets/shrek.jpg" alt="" class="profile-img">
+                </div>
+                <div class="user-name-container">
+                    <input type="text" name="" id="user-name" placeholder="My Name...">
+                </div>
+                <div class="submit-button">
+                    <button id="save-change" type="submit">Save Change</button>
+                </div>
+            </div>
+            <div class="menu-item">
+                <ul>
+                    <li><a class="level" href="#">Level</a></li>
+                    <li><a class="xp" href="#">Xp</a></li>
+                    <li><a class="completed-task" href="#">Task Completed</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="./profile.js"></script>
+</body>
+</html>

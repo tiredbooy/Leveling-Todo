@@ -373,3 +373,17 @@ function loadUserLevel() {
 }
 
 loadUserLevel()
+
+
+
+//  userData
+function loadUserData(){
+    let loadedUserData = JSON.parse(localStorage.getItem('userInfo'));
+    const profileImg = document.querySelector('#profile-img');
+
+    if (loadedUserData) {
+        profileImg.src = loadedUserData.img;
+    }
+}
+
+loadUserData()
