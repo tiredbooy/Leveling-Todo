@@ -11,7 +11,7 @@ const bodyTag = $.querySelector('body');
 const languageBtn = $.querySelector('.language-btn');
 const languageBtnIcon = $.querySelector('.language-btn i');
 const languageSelector = $.querySelector('.languages');
-
+const navBar = $.querySelector('.nav-bar')
 
 // use button to create Task
 addTaskBtns.forEach((btn, index) => {
@@ -28,77 +28,108 @@ addTaskBtns.forEach((btn, index) => {
 // End of use button to create Task
 
 // use Enter to create Task
+
+
 inputBoxes.forEach((inputBox, index) => {
   inputBox.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-      createNewTask(inputBox.value.trim(), index);
-      inputBox.value = "";
+      const trimmedValue = inputBox.value.trim();
+      if(trimmedValue){
+        if(!IsDuplicateTask(trimmedValue,index)){
+          createNewTask(trimmedValue, index);
+          inputBox.value = ""; 
+        }else if(bodyTag.classList.contains('eng')){
+          alert('You have this task in this day already')
+        }else if(bodyTag.classList.contains('per')){
+          alert('شما این وضیفه را در این روز دارید')
+        }
+      }
     }
+    
   });
+
 });
 // end of use Enter to create Task
 
 // create Task section
 
-let taskArray = [];
+  let taskArray = [];
 
-function createNewTask(taskText, index,isComplete = false) {
-  if (taskText.trim() !== "") {
-    let container = document.querySelectorAll(".card-body")[index];
+  let isTask = false;
+  let dupText;
 
-    let taskCheckbox = document.createElement("input");
-    taskCheckbox.setAttribute("type", "checkbox");
-    taskCheckbox.id = "check-box";
-    taskCheckbox.classList.add('dynamic-checkbox');
-
-    let newTask = document.createElement("li");
-    newTask.innerHTML = taskText;
-
-    let removeIcon = document.createElement('i');
-    removeIcon.className = 'fa-solid fa-xmark';
-    removeIcon.addEventListener('click', () => {
-      container.removeChild(taskItem);
-      let id = taskObj.id;
-      taskArray = taskArray.filter(task => task.id !== id);
-      localStorage.setItem('taskArray', JSON.stringify(taskArray));
-    });
-
-    let taskItem = document.createElement("div");
-    taskItem.classList.add("task");
-    taskItem.append(removeIcon, newTask, taskCheckbox);
-
-    container.append(taskItem);
-
-
-
-    // Set the checkbox and task completion status
-    taskCheckbox.checked = isComplete;
-    if (isComplete) {
-      taskItem.classList.add('completed');
-    }
-
-    taskCheckbox.addEventListener("change", () => {
-      isComplete = taskCheckbox.checked;
-      updateTaskStatus(taskText, isComplete, index);
-    });
-
-    let id = Math.floor(Math.random() * 100);
-
-    let taskObj = {
-      id: id,
-      taskText: taskText.trim(),
-      isComplete: isComplete,
-      index: index,
-    };
-
-    taskArray.push(taskObj);
-
-    localStorage.setItem("taskArray", JSON.stringify(taskArray));
-  }
+  function IsDuplicateTask (taskText,index){
+  let getTaskArray = JSON.parse(localStorage.getItem('taskArray')) || [];
+  return getTaskArray.some(task => task.index === index && task.taskText === taskText);
 }
 
 
+
+  
+
+  function createNewTask(taskText, index,isComplete = false) {
+    
+    if (taskText.trim() !== "") {
+      let container = document.querySelectorAll(".card-body")[index];
+  
+      let taskCheckbox = document.createElement("input");
+      taskCheckbox.setAttribute("type", "checkbox");
+      taskCheckbox.id = "check-box";
+      taskCheckbox.classList.add('dynamic-checkbox');
+  
+      let newTask = document.createElement("li");
+      newTask.innerHTML = taskText;
+  
+      let removeIcon = document.createElement('i');
+      removeIcon.className = 'fa-solid fa-xmark';
+      removeIcon.addEventListener('click', () => {
+        container.removeChild(taskItem);
+        let id = taskObj.id;
+        taskArray = taskArray.filter(task => task.id !== id);
+        localStorage.setItem('taskArray', JSON.stringify(taskArray));
+      });
+  
+      let taskItem = document.createElement("div");
+      taskItem.classList.add("task");
+      taskItem.append(removeIcon, newTask, taskCheckbox);
+  
+      container.append(taskItem);
+  
+  
+  
+      // Set the checkbox and task completion status
+      taskCheckbox.checked = isComplete;
+      if (isComplete) {
+        taskItem.classList.add('completed');
+      }
+  
+      taskCheckbox.addEventListener("change", () => {
+        isComplete = taskCheckbox.checked;
+        updateTaskStatus(taskText, isComplete, index);
+      });
+  
+      let id = Math.floor(Math.random() * 100);
+  
+      let taskObj = {
+          id: id,
+          taskText: taskText.trim(),
+          isComplete: isComplete,
+          index: index,
+      }
+        
+      if(isTask != true){
+        taskArray.push(taskObj);
+      }
+      
+      
+      localStorage.setItem("taskArray", JSON.stringify(taskArray));
+    }
+  }
+  
+
+
 function updateTaskStatus(taskText, isComplete,index) {
+  a(taskText,index)
   taskArray.forEach((task) => {
     if (task.taskText.toLowerCase() === taskText.toLowerCase()) {
       task.isComplete = isComplete;
@@ -137,13 +168,29 @@ loadTasks();
 
 
 
+const c = $.querySelector('main')
 
 //  wrapper menu dev
 profilePicture.addEventListener('click',() => {
     menuWrapper.classList.toggle('active')
 })
+
+c.addEventListener('click',(e) => {
+  if(menuWrapper.classList.contains('active')){
+    menuWrapper.classList.remove('active')
+  }
+})
+
 // end of wrapper menu dev
 
+
+$.addEventListener('DOMContentLoaded',() => {
+  if(bodyTag.classList.contains('light-theme')){
+    currentThemeImage.src = "./assets/icon-moon.svg"
+  }else{
+    currentThemeImage.src = "./assets/icon-sun.svg"
+  }
+})
 
 // them Switch
 function switchTheme() {
@@ -231,7 +278,6 @@ function loadLanguage(){
 loadLanguage()
 
 
-
 function updateLang(currentLang) {
 
   const cardHeaderTitle = $.querySelectorAll('.card-header-title');
@@ -250,7 +296,7 @@ function updateLang(currentLang) {
     bodyTag.style.fontFamily = '"Poppins", sans-serif'
     bodyTag.style.fontSize = '1em'
 
-    const englishDays = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wensday', 'Thursday', 'Friday'];
+    const englishDays = ['Sunday', 'Monday', 'Tuesday', 'Wensday', 'Thursday', 'Friday','Saturday'];
     cardHeaderTitle.forEach((title) => {
       title.innerHTML = 'Task';
   });
@@ -316,7 +362,7 @@ let playerLevel = 1;
 let playerRank = 'No Rank';
 
 function handelUserLevel(isComplete) {
-  if (isComplete) {
+  if (isComplete == true) {
     playerXp += 1000;
     playerLevel = Math.floor(playerXp / 1000);
 
@@ -341,15 +387,17 @@ function handelUserLevel(isComplete) {
       playerRank = 'No Rank';
     }
 
-    let levelStat = {
-      playerXp: playerXp,
-      playerLevel: playerLevel,
-      playerRank: playerRank
-    }
-    localStorage.setItem('levelStat', JSON.stringify(levelStat));
+    
+    
+  }else{
+    playerXp -= 1000;
   }
-
-  
+  let levelStat = {
+    playerXp: playerXp,
+    playerLevel: playerLevel,
+    playerRank: playerRank
+  }
+  localStorage.setItem('levelStat', JSON.stringify(levelStat));
 
 }
 
