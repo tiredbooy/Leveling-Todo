@@ -43,6 +43,7 @@ body.eng{
 
 body.per{
     direction: rtl;
+    font-family: var(--font-per);
 }
 
 .container {

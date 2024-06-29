@@ -11,7 +11,8 @@ const bodyTag = $.querySelector('body');
 const languageBtn = $.querySelector('.language-btn');
 const languageBtnIcon = $.querySelector('.language-btn i');
 const languageSelector = $.querySelector('.languages');
-const navBar = $.querySelector('.nav-bar')
+const navBar = $.querySelector('.nav-bar');
+const signOutBtn = $.querySelector('.logOut')
 
 // use button to create Task
 addTaskBtns.forEach((btn, index) => {
@@ -129,7 +130,6 @@ inputBoxes.forEach((inputBox, index) => {
 
 
 function updateTaskStatus(taskText, isComplete,index) {
-  a(taskText,index)
   taskArray.forEach((task) => {
     if (task.taskText.toLowerCase() === taskText.toLowerCase()) {
       task.isComplete = isComplete;
@@ -168,14 +168,16 @@ loadTasks();
 
 
 
-const c = $.querySelector('main')
+
 
 //  wrapper menu dev
-profilePicture.addEventListener('click',() => {
+profilePicture.addEventListener('click',(e) => {
+    e.preventDefault()
     menuWrapper.classList.toggle('active')
 })
 
-c.addEventListener('click',(e) => {
+const mainPage = $.querySelector('main')  
+mainPage.addEventListener('click',(e) => {
   if(menuWrapper.classList.contains('active')){
     menuWrapper.classList.remove('active')
   }
@@ -431,7 +433,17 @@ function loadUserData(){
 
     if (loadedUserData) {
         profileImg.src = loadedUserData.img;
+        // console.log(loadedUserData.img)
     }
 }
 
 loadUserData()
+
+
+//  signOut Handeler
+signOutBtn.addEventListener('click', (e) => {
+  e.preventDefault()
+  localStorage.removeItem('userData');
+  window.location.href = './login-page/login.html';
+
+});

@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400..700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root{
+    --dark-bg-color: #131313;
+    --light-bg-color: #fff;
+
+    --dark-header-color: #4b4b4c;
+    --light-header-color: #2e2e2e;
+
+    --light-text-color: #fff;
+    --dark-text-color: #222;
+
+    --font-size : 1em;
+    --font-bold : 600;
+    --font-bolder : 800;
+    --font-reqular : 400;
+    --font-eng : "Poppins", sans-serif;
+    --font-per : "Markazi Text", serif;
+    
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: linear-gradient(75deg, rgb(59, 59, 59),rgb(59, 59, 59) , rgb(36, 36, 36));
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: var(--font-eng);
+    transition: all 0.3s;
+}
+
+
+.welcome-container{
+    display: none;
+    position: absolute;
+    background: white;
+    box-shadow: 0 0 3px #333;
+    border: 1px solid #666;
+    border-radius: 10px; 
+    top: 1em;
+    font-size: 1.2em;
+    padding: 25px 30px;
+    width: 300px;
+    height: 100px;
+}
+
+.welcome-container button{
+    margin: 15% 0 0 80%;
+    padding: 7px;
+    border-radius: 7px;
+    border: none;
+    outline: none;
+    background: none;
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.welcome-container button:hover{
+    background: black;
+    color: white;
+    transition: 0.2s;
+}
+
+.sign-container{
+    width: 550px;
+}
+
+
+.login-form{
+    padding: 1.5em 1.2em;
+    text-align: center;
+    border-radius: 10px 40px 10px 10px;
+    border: 1px solid rgb(218, 218, 218);
+}
+
+.login-header span{
+    color: rgb(219, 219, 219);
+    font-weight: var(--font-bolder);
+}
+
+.signUp-login{
+    padding: 1.5em 1.2em;
+    text-align: center;
+    
+}
+
+.signUp-login span{
+    color: rgb(219, 219, 219);  
+    cursor: pointer;
+}
+
+.signUp-login span:hover{
+    color: black;
+    transition: 0.2s;
+}
+
+.signUp-login span:active{
+    color: black;
+    transition: 0.2s;
+}
+
+.password-container {
+    position: relative;
+    display: inline-block;
+}
+
+.password-container input {
+    margin-left: 5px;
+}
+
+.password-container i {
+    position: absolute;
+    top: 67%;
+    right: 8px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #9b9b9b;
+}
+
+.password-container i:hover{
+    color: #ffffff;
+}
+
+.form-item label{
+    margin-right: 5px;
+    color: #bebebe;
+}
+
+.form-item input{
+    margin-top: 20px;
+    padding: 8px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    background: none;
+    border: 1px solid rgb(170, 170, 170);
+    font-size: 1em;
+    transition: all 0.5s;
+    color: rgb(223, 223, 223);
+    letter-spacing: 1px;
+}
+
+.form-item input:focus{
+    border: none;
+    box-shadow: 0px 0px 8px rgb(0, 217, 255);
+}
+
+
+.form-item button{
+    margin : 30px;
+    padding: 10px;
+    font-size: 1.1em;
+    font-weight: var(--font-bold);
+    background: none;
+    outline: none;
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    background: rgb(87, 146, 255);
+    color: white;
+}
+
+.form-item button:hover{
+    background: rgb(47, 120, 255);
+}
+
+#email-label{
+    margin-left: 35px;
+}

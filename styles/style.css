@@ -143,11 +143,18 @@ header .nav-bar .nav-item .right .profile{
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: black;
+    background: transparent;
     margin-left: 13px;
     cursor: pointer;
     transition: all 0.3s;
 }
+
+header .nav-bar .nav-item .right .profile img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-size:auto;
+}   
 
 header .nav-bar .nav-item .right button{
     background: none;

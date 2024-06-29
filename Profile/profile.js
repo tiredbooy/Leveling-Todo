@@ -3,19 +3,30 @@ const profileImgUploader = $.querySelector('#file-upload');
 const profileImg = $.querySelector('.profile-img');
 const userNameInput = $.querySelector('#user-name');
 const submitBtn = $.querySelector('#save-change');
-const bodyTag = $.querySelector('body')
+const bodyTag = $.querySelector('body');
+const userNameTxt = $.querySelector('.userName')
 
 
-profileImgUploader.addEventListener('change', () => {
+profileImgUploader.addEventListener('change', (event) => {
     let uploaderValueSrc = profileImgUploader.value;
 
     if(uploaderValueSrc){
         profileImg.style.display = 'block';
         $.querySelector('.custom-file-upload').style.visibility = 'hidden';
-        profileImg.src = URL.createObjectURL(profileImgUploader.files[0]);
-        x = uploaderValueSrc;
+        // profileImg.src = URL.createObjectURL(profileImgUploader.files[0]);
+        let file = event.target.files[0];
+        let reader = new FileReader();
+
+        reader.onload = function(event){
+            profileImg.src = event.target.result;
+            x = profileImg.src;
+            addToLocalStorage();
+        }
+        reader.readAsDataURL(file);
+
+        // x = uploaderValueSrc;
     }
-    addToLocalStorage();
+    
 });
 
 userNameInput.addEventListener('change',() => {
@@ -26,7 +37,6 @@ userNameInput.addEventListener('change',() => {
 function addToLocalStorage(){
     submitBtn.addEventListener('click',() => {
         let userInfoObj = {
-            name : y,
             img : x,
         }
         localStorage.setItem('userInfo',JSON.stringify(userInfoObj));
@@ -56,7 +66,15 @@ function loadItemsFromLocal () {
         bodyTag.classList.add('per');
     }
 
+    let loadUserData = JSON.parse(localStorage.getItem('userData'));
+    if(loadUserData){
+        userNameTxt.innerHTML = loadUserData.username;
+    }else{
+        userNameTxt.innerHTML = userNameInput.value;
+    }
+
     function handelLang(x){
+
         if(bodyTag.classList.contains('eng')){
             bodyTag.style.fontFamily = '"Poppins", sans-serif'
             bodyTag.style.fontSize = '1em'
@@ -90,3 +108,18 @@ function loadItemsFromLocal () {
 }
 
 loadItemsFromLocal();
+
+
+
+
+
+
+
+// // Retrieve the object from localStorage
+// const savedData = JSON.parse(localStorage.getItem('myData'));
+
+// // Modify the specific property (city in this case)
+// savedData.city = 'New City';
+
+// // Save the updated object back to the localStorage
+// localStorage.setItem('myData', JSON.stringify(savedData));
